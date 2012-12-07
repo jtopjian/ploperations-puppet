@@ -116,12 +116,6 @@ class puppet::server (
           match   => '^START=',
           require => Package[$puppet::params::master_package],
         }
-
-        service { 'puppetmaster':
-          enable  => false,
-          ensure  => stopped,
-          require => Package[$puppet::params::master_package],
-        }
       }
     }
   }
