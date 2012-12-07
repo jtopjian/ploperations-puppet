@@ -15,7 +15,6 @@ class puppet::passenger {
   include apache::ssl
   include ::passenger
   include passenger::params
-  include ::rack
 
   file { ['/etc/puppet/rack', '/etc/puppet/rack/public', '/etc/puppet/rack/tmp']:
       owner  => 'puppet',
