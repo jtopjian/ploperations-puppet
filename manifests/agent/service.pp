@@ -22,7 +22,7 @@ class puppet::agent::service (
         mode    => '0644',
         owner   => 'root',
         group   => 'root',
-        content => template("puppet/${puppet::params::agent_defaults}"),
+        content => template("puppet${puppet::params::agent_defaults}.erb"),
       }
     }
     darwin: {
