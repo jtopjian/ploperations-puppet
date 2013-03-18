@@ -56,9 +56,6 @@ class puppet::storeconfig (
           dbpassword => $dbpassword,
       }
     }
-    'puppetdb': {
-      class {'::puppet::storeconfig::puppetdb': }
-    }
     default: { err("Target storeconfigs backend \"$backend\" not implemented") }
   }
 

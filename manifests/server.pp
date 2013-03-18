@@ -37,13 +37,14 @@ class puppet::server (
     $config_version_cmd = '/usr/bin/git --git-dir $confdir/environments/$environment/.git rev-parse --short HEAD 2>/dev/null || echo',
     $storeconfigs       = undef,
     $report             = 'true',
-    $reports            = ["store", "https"],
+    $reports            = ["store", "http", "puppetdb"],
     $reporturl          = "http://$fqdn/reports",
     $servertype         = "unicorn",
     $ca                 = false,
     $bindaddress        = '::',
     $enc                = '',
     $enc_exec           = '',
+    $master_package     = $::puppet::params::master_package,
     $monitor_server     = hiera('puppet_server_monitor', 'true'),
     $backup_server      = hiera('puppet_server_backup', 'true')
   ) {

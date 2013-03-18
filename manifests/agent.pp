@@ -38,7 +38,7 @@ class puppet::agent(
   $manage_repos   = true,
   $manage_service = undef,
   $method         = 'cron',
-  $environment    = 'production'
+  $environment    = 'production',
 ) {
 
   include puppet
