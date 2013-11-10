@@ -49,6 +49,7 @@ class puppet::server (
   $backup_server      = hiera('puppet_server_backup', 'true'),
   $servername         = undef,
   $ensure             = 'present',
+  $parser             = undef,
   $gentoo_use         = $puppet::params::master_use,
   $gentoo_keywords    = $puppet::params::master_keywords,
 ) inherits puppet::params {
