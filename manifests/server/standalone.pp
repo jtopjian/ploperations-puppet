@@ -5,23 +5,21 @@ class puppet::server::standalone (
   include puppet
   include puppet::server
 
+
+  file { '/etc/init.d/puppetmaster':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/puppet/puppetmaster.init',
+    require => Class['::puppet::server'],
+  }
+
   service { $puppet::params::master_service:
     ensure    => $enabled ? {true => running, false => stopped},
     enable    => $enabled,
     hasstatus => true,
-    require   => Class['puppet::server::config'];
+    require   => File['/etc/init.d/puppetmaster'],
   }
 
-  if ! $enabled {
-    case $::lsbdistid {
-      'Ubuntu': {
-        file_line { '/etc/default/puppetmaster START':
-          path    => '/etc/default/puppetmaster',
-          line    => 'START=no',
-          match   => '^START=',
-          require => Package[$puppet::params::master_package],
-        }
-      }
-    }
-  }
 }
