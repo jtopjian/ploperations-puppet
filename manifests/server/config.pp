@@ -24,11 +24,9 @@ class puppet::server::config {
       value   => 'puppet';
   }
 
-  if $puppet::server::ca {
-    ini_setting { 'ca':
-      setting => 'ca',
-      value   => $puppet::server::ca,
-    }
+  ini_setting { 'ca':
+    setting => 'ca',
+    value   => $puppet::server::ca,
   }
 
   if $puppet::server::servertype == 'standalone' {
@@ -70,6 +68,11 @@ class puppet::server::config {
       'reporturl_ssl_cert':
         setting => 'reporturl_ssl_cert',
         value   => '/etc/ssl/certs/ca-certificates.crt';
+    }
+  }
+
+  if $puppet::server::reportfrom {
+    ini_setting {
       'reportfrom':
         setting => 'reportfrom',
         value   => $puppet::server::reportfrom;

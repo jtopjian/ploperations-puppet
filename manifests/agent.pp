@@ -36,31 +36,31 @@
 #  }
 #
 class puppet::agent(
-  $server          = 'puppet',
-  $ca_server       = undef,
-  $report          = true,
-  $report_server   = undef,
-  $report_format   = undef,
-  $manage_repos    = true,
-  $method          = 'cron',
-  $ensure          = 'present',
-  $monitor_service = false,
-  $environment     = $::environment,
-  $pluginsync      = true,
-  $logdir          = $puppet::params::puppet_logdir,
-  $vardir          = $puppet::params::puppet_vardir,
-  $ssldir          = $puppet::params::puppet_ssldir,
-  $rundir          = $puppet::params::puppet_rundir,
-  $certname        = $::clientcert,
-  $showdiff        = true,
-  $splay           = false,
-  $configtimeout   = 360,
-  $gentoo_use      = $puppet::params::agent_use,
-  $gentoo_keywords = $puppet::params::agent_keywords,
+  $ensure            = 'present',
+  $server            = 'puppet',
+  $ca_server         = undef,
+  $report            = true,
+  $report_server     = undef,
+  $report_format     = undef,
+  $manage_repos      = true,
+  $monitor_service   = false,
+  $environment       = $::environment,
+  $pluginsync        = true,
+  $certname          = $::clientcert,
+  $showdiff          = true,
+  $splay             = false,
+  $configtimeout     = 360,
+  $usecacheonfailure = true,
+  $method            = $puppet::params::default_method,
+  $gentoo_use        = $puppet::params::agent_use,
+  $gentoo_keywords   = $puppet::params::agent_keywords,
+  $manage_package    = true,
 ) inherits puppet::params {
 
   include puppet
-  include puppet::package
+  if $manage_package {
+    include puppet::package
+  }
 
   if $report_server {
     $real_report_server = $report_server
@@ -86,6 +86,9 @@ class puppet::agent(
     service: {
       include puppet::agent::service
       class { 'puppet::agent::cron': enable => false }
+    }
+    only_service: {
+      include puppet::agent::service
     }
     none: {
       class { 'puppet::agent::service': enable => false }

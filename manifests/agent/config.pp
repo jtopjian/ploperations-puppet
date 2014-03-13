@@ -1,4 +1,6 @@
 class puppet::agent::config {
+  include puppet
+  include puppet::agent
   include puppet::params
 
   Ini_setting {
@@ -41,25 +43,25 @@ class puppet::agent::config {
   ini_setting { 'logdir':
     section => 'main',
     setting => 'logdir',
-    value   => $puppet::agent::logdir,
+    value   => $puppet::logdir,
   }
 
   ini_setting { 'vardir':
     section => 'main',
     setting => 'vardir',
-    value   => $puppet::agent::vardir,
+    value   => $puppet::vardir,
   }
 
   ini_setting { 'ssldir':
     section => 'main',
     setting => 'ssldir',
-    value   => $puppet::agent::ssldir,
+    value   => $puppet::ssldir,
   }
 
   ini_setting { 'rundir':
     section => 'main',
     setting => 'rundir',
-    value   => $puppet::agent::rundir,
+    value   => $puppet::rundir,
   }
 
   ini_setting { 'certname':
@@ -96,5 +98,11 @@ class puppet::agent::config {
     section => 'agent',
     setting => 'configtimeout',
     value   => $puppet::agent::configtimeout,
+  }
+
+  ini_setting { 'usecacheonfailure':
+    section => 'agent',
+    setting => 'usecacheonfailure',
+    value   => $puppet::agent::usecacheonfailure,
   }
 }
